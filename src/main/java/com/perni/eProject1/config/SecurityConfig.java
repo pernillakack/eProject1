@@ -11,6 +11,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
+import static com.perni.eProject1.user.Roles.ADMIN;
+import static com.perni.eProject1.user.Roles.USER;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -20,23 +23,30 @@ public class SecurityConfig {
         return http
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/").permitAll()
-                                .requestMatchers("/register").permitAll()
-                        .requestMatchers("/admin").hasRole("ADMIN")
+                        .requestMatchers("/register").permitAll()
+                        .requestMatchers("/user").hasAnyRole(ADMIN.name(), USER.name())
+                        .requestMatchers("/admin").hasRole(ADMIN.name())
                         .anyRequest().authenticated()
                 )
                 .formLogin(Customizer.withDefaults())
                 .build();
 
     }
-
+    @Bean
     public UserDetailsService userDetailsService(){
-        UserDetails admin = User.withDefaultPasswordEncoder()
-                .username("admin")
-                .password("12345")
-                .roles("ADMIN")
+        UserDetails user = User.withDefaultPasswordEncoder()
+                .username("Penny")
+                .password("1234")
+                .roles(USER.name())
                 .build();
 
-        return new InMemoryUserDetailsManager(admin);
+        UserDetails admin = User.withDefaultPasswordEncoder()
+                .username("Admin")
+                .password("12345")
+                .roles(ADMIN.name())
+                .build();
+
+        return new InMemoryUserDetailsManager(user, admin);
     }
 
 }
