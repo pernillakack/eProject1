@@ -1,7 +1,10 @@
 package com.perni.eProject1.config;
 
+import com.perni.eProject1.user.UserEntityDetailsService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -18,35 +21,38 @@ import static com.perni.eProject1.user.Roles.USER;
 @EnableWebSecurity
 public class SecurityConfig {
 
+    private final PasswordConfig passwordConfig;
+    private final UserEntityDetailsService userEntityDetailsService;
+
+    @Autowired
+    public SecurityConfig(PasswordConfig passwordConfig, UserEntityDetailsService userEntityDetailsService) {
+        this.passwordConfig = passwordConfig;
+        this.userEntityDetailsService = userEntityDetailsService;
+    }
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         return http
+                .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/").permitAll()
-                        .requestMatchers("/register").permitAll()
+                        .requestMatchers("/", "/register").permitAll()
                         .requestMatchers("/user").hasAnyRole(ADMIN.name(), USER.name())
                         .requestMatchers("/admin").hasRole(ADMIN.name())
-                        .anyRequest().authenticated()
+                        .anyRequest().permitAll()
                 )
                 .formLogin(Customizer.withDefaults())
+                .authenticationProvider(daoAuthenticationProvider())
                 .build();
 
     }
-    @Bean
-    public UserDetailsService userDetailsService(){
-        UserDetails user = User.withDefaultPasswordEncoder()
-                .username("Penny")
-                .password("1234")
-                .roles(USER.name())
-                .build();
 
-        UserDetails admin = User.withDefaultPasswordEncoder()
-                .username("Admin")
-                .password("12345")
-                .roles(ADMIN.name())
-                .build();
 
-        return new InMemoryUserDetailsManager(user, admin);
+    public DaoAuthenticationProvider daoAuthenticationProvider(){
+        DaoAuthenticationProvider daoProvider = new DaoAuthenticationProvider();
+
+        daoProvider.setPasswordEncoder(passwordConfig.bCryptPasswordEncoder());
+        daoProvider.setUserDetailsService(userEntityDetailsService);
+
+        return daoProvider;
     }
-
 }
