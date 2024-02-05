@@ -2,10 +2,14 @@ package com.perni.eProject1.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @Entity
@@ -16,6 +20,9 @@ public class UserEntity implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+    @Email
+    @NotEmpty
+    @Column(unique = true)
     private String email;
     private String password;
     private boolean accountNonExpired;
@@ -31,22 +38,28 @@ public class UserEntity implements UserDetails {
 
 
     public UserEntity(String email, String password, boolean accountNonExpired, boolean accountNonLocked, boolean accountEnabled,
-                      boolean credentialsNonExpired) {
+                      boolean credentialsNonExpired, Roles roles) {
         this.email = email;
         this.password = password;
         this.accountNonExpired = accountNonExpired;
         this.accountNonLocked = accountNonLocked;
         this.accountEnabled = accountEnabled;
         this.credentialsNonExpired = credentialsNonExpired;
+        this.authority = getAuthoritiesFromRoles();
     }
-
     @Transient
-    @JsonIgnore
-    private List<GrantedAuthority>authority;
+    private List<GrantedAuthority> authority;
+
+    private List<GrantedAuthority> getAuthoritiesFromRoles(){
+        return Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + role.name()));
+    }
 
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
+        if(authority == null){
+            authority = getAuthoritiesFromRoles();
+        }
         return authority;
     }
 
@@ -114,5 +127,9 @@ public class UserEntity implements UserDetails {
 
     public void setAuthority(List<GrantedAuthority> authority) {
         this.authority = authority;
+    }
+
+    public void setRole(Roles role) {
+        this.role = role;
     }
 }

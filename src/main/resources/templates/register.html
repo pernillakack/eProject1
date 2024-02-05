@@ -5,6 +5,26 @@
     <title>Register</title>
 </head>
 <body>
- <h1>Register</h1>
+ <h1>Register page</h1>
+    <form method="post" th:object="${userEntity}" th:action="@{/register}">
+        <label for="email">email</label>
+        <input type="text" th:field="*{email}" placeholder="email..." id="email">
+
+        <label for="password">password</label>
+        <input type="text" th:field="*{password}" placeholder="password..." id="password">
+        <button type="submit">Register</button>
+
+        <p th:if="${#fields.hasErrors('email')}" th:errorclass="error" th:errors="*{username}" >
+        </p>
+
+        <div th:if="${#fields.hasErrors('email')}">
+            <ul>
+                <li th:each="error: ${#fields.allErrors()}" th:text="${error}"></li>
+            </ul>
+
+        </div>
+    </form>
+
+
 </body>
 </html>
