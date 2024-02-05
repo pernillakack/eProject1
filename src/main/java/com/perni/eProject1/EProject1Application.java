@@ -1,10 +1,10 @@
 package com.perni.eProject1;
 
-import com.perni.eProject1.user.UserEntity;
+import com.perni.eProject1.models.UserEntity;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import static com.perni.eProject1.user.Roles.ADMIN;
+import static com.perni.eProject1.models.Roles.ADMIN;
 
 @SpringBootApplication
 public class EProject1Application {

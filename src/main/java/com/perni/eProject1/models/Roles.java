@@ -1,4 +1,4 @@
-package com.perni.eProject1.user;
+package com.perni.eProject1.models;
 
 public enum Roles {
 

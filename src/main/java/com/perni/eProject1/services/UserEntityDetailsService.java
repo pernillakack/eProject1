@@ -1,5 +1,6 @@
-package com.perni.eProject1.user;
+package com.perni.eProject1.services;
 
+import com.perni.eProject1.models.UserEntity;
 import com.perni.eProject1.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

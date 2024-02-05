@@ -2,16 +2,14 @@ package com.perni.eProject1.controllers;
 
 import com.perni.eProject1.config.PasswordConfig;
 import com.perni.eProject1.repositories.UserRepository;
-import com.perni.eProject1.user.Roles;
-import com.perni.eProject1.user.UserEntity;
+import com.perni.eProject1.models.Roles;
+import com.perni.eProject1.models.UserEntity;
 import jakarta.validation.Valid;
-import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class UserController {

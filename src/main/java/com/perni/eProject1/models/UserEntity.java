@@ -1,6 +1,5 @@
-package com.perni.eProject1.user;
+package com.perni.eProject1.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
