@@ -40,7 +40,10 @@ public class SecurityConfig {
                         .requestMatchers("/admin").hasRole(ADMIN.name())
                         .anyRequest().permitAll()
                 )
-                .formLogin(Customizer.withDefaults())
+                .formLogin(formLogin -> formLogin
+                        .loginPage("/login")
+                        .usernameParameter("email")
+                )
                 .authenticationProvider(daoAuthenticationProvider())
                 .build();
 

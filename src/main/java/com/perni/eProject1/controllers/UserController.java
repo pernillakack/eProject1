@@ -5,13 +5,13 @@ import com.perni.eProject1.repositories.UserRepository;
 import com.perni.eProject1.user.Roles;
 import com.perni.eProject1.user.UserEntity;
 import jakarta.validation.Valid;
+import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-
-import static com.perni.eProject1.user.Roles.USER;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class UserController {
@@ -23,6 +23,7 @@ public class UserController {
         this.userRepository = userRepository;
         this.passwordConfig = passwordConfig;
     }
+
     @GetMapping("/register")
     public String registerUserPage(UserEntity userEntity, Model model){
 
@@ -47,4 +48,5 @@ public class UserController {
 
         return "redirect:user";
     }
+
 }

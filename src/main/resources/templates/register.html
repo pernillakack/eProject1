@@ -8,10 +8,10 @@
  <h1>Register page</h1>
     <form method="post" th:object="${userEntity}" th:action="@{/register}">
         <label for="email">email</label>
-        <input type="text" th:field="*{email}" placeholder="email..." id="email">
+        <input type="text" th:field="*{email}" placeholder="email..." id="email" required autofocus>
 
         <label for="password">password</label>
-        <input type="text" th:field="*{password}" placeholder="password..." id="password">
+        <input type="text" th:field="*{password}" placeholder="password..." id="password" required>
         <button type="submit">Register</button>
 
         <p th:if="${#fields.hasErrors('email')}" th:errorclass="error" th:errors="*{username}" >
