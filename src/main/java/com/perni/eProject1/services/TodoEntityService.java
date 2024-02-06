@@ -31,6 +31,7 @@ public class TodoEntityService {
             todoEntity.setCreatedAt(Instant.now());
         }
         todoEntity.setUpdatedAt(Instant.now());
+        todoEntity.setComplete(false);
         return todoItemRepository.save(todoEntity);
     }
 

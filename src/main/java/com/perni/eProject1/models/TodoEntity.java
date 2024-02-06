@@ -48,9 +48,17 @@ public class TodoEntity implements Serializable {
         this.id = id;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     @Override
     public String toString(){
-        return String.format("TodoItem{id='%d', description='%s', isComplete='%s, createdAt='%s, updatedAt='%s'}",
+        return String.format("TodoItem{id='%d', description='%s', isComplete='%s', createdAt='%s', updatedAt='%s'}",
                 id, description, isComplete, createdAt, updatedAt);
     }
 }
