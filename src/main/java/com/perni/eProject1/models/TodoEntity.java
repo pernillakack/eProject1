@@ -12,7 +12,7 @@ public class TodoEntity implements Serializable {
     @Id@GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String description;
-    private Boolean isComplete;
+    private boolean isComplete;
     private Instant createdAt;
     private Instant updatedAt;
 
@@ -20,12 +20,12 @@ public class TodoEntity implements Serializable {
         return id;
     }
 
-    public Boolean getComplete() {
+    public boolean getComplete() {
         return isComplete;
     }
 
-    public void setComplete(Boolean complete) {
-        isComplete = complete;
+    public void setComplete(boolean complete) {
+        this.isComplete = complete;
     }
 
     public Instant getCreatedAt() {

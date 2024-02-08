@@ -31,7 +31,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/", "/register").permitAll()
-                        .requestMatchers("/user", "/todo", "/create-todo").hasAnyRole(ADMIN.name(), USER.name())
+                        .requestMatchers("/user", "/todo", "/create-todo", "/delete/**", "/edit/**").hasAnyRole(ADMIN.name(), USER.name())
                         .requestMatchers("/admin").hasRole(ADMIN.name())
                         .anyRequest().permitAll()
                 )
