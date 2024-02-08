@@ -16,6 +16,10 @@ public class TodoEntity implements Serializable {
     private Instant createdAt;
     private Instant updatedAt;
 
+    @ManyToOne()
+    @JoinColumn(name="users_email")
+    private UserEntity user;
+
     public Long getId() {
         return id;
     }
@@ -54,6 +58,14 @@ public class TodoEntity implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public UserEntity getUser() {
+        return user;
+    }
+
+    public void setUser(UserEntity user) {
+        this.user = user;
     }
 
     @Override

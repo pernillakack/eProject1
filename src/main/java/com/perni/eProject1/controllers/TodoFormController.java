@@ -1,8 +1,11 @@
 package com.perni.eProject1.controllers;
 
 import com.perni.eProject1.models.TodoEntity;
+import com.perni.eProject1.models.UserEntity;
 import com.perni.eProject1.services.TodoEntityService;
 import jakarta.validation.Valid;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -26,11 +29,14 @@ public class TodoFormController {
 
     @PostMapping("/todo")
     public String createTodoItem(@Valid TodoEntity todoEntity, BindingResult result, Model model){
-        TodoEntity item = new TodoEntity();
-        item.setDescription(todoEntity.getDescription());
-        item.setComplete(todoEntity.getComplete());
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserEntity currentUser = (UserEntity) authentication.getPrincipal();
+        TodoEntity newTodo = new TodoEntity();
+        newTodo.setDescription(todoEntity.getDescription());
+        newTodo.setComplete(todoEntity.getComplete());
+        newTodo.setUser(currentUser);
 
-        todoEntityService.save(todoEntity);
+        todoEntityService.save(newTodo);
         return "redirect:/user";
 
     }

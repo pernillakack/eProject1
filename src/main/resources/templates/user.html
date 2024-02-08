@@ -22,7 +22,7 @@
         </tr>
         </thead>
         <tbody>
-            <tr th:each="item : ${todoEntity}">
+            <tr th:each="item : ${userTodos}">
                 <td>
                     <div class="btn btn-group-sm" role="group">
                         <a class="btn btn-info" th:href="@{/edit/{id}(id=${item.id})}">

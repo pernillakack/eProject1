@@ -3,6 +3,7 @@ package com.perni.eProject1.models;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
+import org.hibernate.mapping.PrimaryKey;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,13 +22,23 @@ public class UserEntity implements UserDetails {
     private long id;
     @Email
     @NotEmpty
-    @Column(unique = true)
     private String email;
     private String password;
     private boolean accountNonExpired;
     private boolean accountNonLocked;
     private boolean accountEnabled;
     private boolean credentialsNonExpired;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<TodoEntity> todos;
+
+    public List<TodoEntity> getTodos() {
+        return todos;
+    }
+
+    public void setTodos(List<TodoEntity> todos) {
+        this.todos = todos;
+    }
 
     @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "VARCHAR(255)")
