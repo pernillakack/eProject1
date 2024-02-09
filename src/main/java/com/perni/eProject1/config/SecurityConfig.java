@@ -38,6 +38,7 @@ public class SecurityConfig {
                 .formLogin(formLogin -> formLogin
                         .loginPage("/login")
                         .usernameParameter("email")
+                        .defaultSuccessUrl("/user")
                 )
                 .authenticationProvider(daoAuthenticationProvider())
                 .build();
