@@ -8,7 +8,7 @@
 </head>
 <body>
   <div class="container">
-    <div class="row mt-5"></div>
+    <div class="row mt-5">
     <div class="col-2">
       <p><a class="btn btn-outline-success" href="/user">
         <i class="bi bi-arrow-left-square-fill"></i>Back to list</a>
@@ -18,14 +18,15 @@
       <h2>Add a new todo item</h2>
       <form action="#" th:action="@{/todo}" th:object="${todoEntity}" method="POST">
         <div class="form-group">
-          <label for="description">Description</label>
+          <div class="my-4">
+          <label for="description">Description:</label>
           <input class="form-control" type="text" th:field="*{description}" id="description" placeholder="Description...">
-
+          </div>
           <button type="submit" class="btn btn-outline-success"><i class="bi bi-plus-square-fill"></i>Add Todo</button>
         </div>
       </form>
     </div>
-
+    </div>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
