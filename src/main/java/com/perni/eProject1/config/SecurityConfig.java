@@ -30,16 +30,19 @@ public class SecurityConfig {
         return http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/", "/register").permitAll()
+                        .requestMatchers("/", "/register", "/access-denied").permitAll()
                         .requestMatchers("/user", "/todo", "/create-todo", "/delete/**", "/edit/**").hasAnyRole(ADMIN.name(), USER.name())
                         .requestMatchers("/admin").hasRole(ADMIN.name())
                         .anyRequest().permitAll()
+
                 )
                 .formLogin(formLogin -> formLogin
                         .loginPage("/login")
                         .usernameParameter("email")
                         .defaultSuccessUrl("/user")
                 )
+                .exceptionHandling(access -> access
+                        .accessDeniedPage("/access-denied"))
                 .authenticationProvider(daoAuthenticationProvider())
                 .build();
 

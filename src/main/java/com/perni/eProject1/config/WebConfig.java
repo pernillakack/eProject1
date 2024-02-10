@@ -19,6 +19,7 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addViewController("/login").setViewName("login");
         registry.addViewController("/create-todo").setViewName("create-todo");
         registry.addViewController("/edit/").setViewName("edit-todo-item");
+        registry.addViewController("/access-denied").setViewName("access-denied");
     }
 
     @Override

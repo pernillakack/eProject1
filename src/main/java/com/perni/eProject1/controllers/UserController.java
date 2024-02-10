@@ -30,6 +30,11 @@ public class UserController {
         this.passwordConfig = passwordConfig;
     }
 
+    @GetMapping("/access-denied")
+    public String accessDenied(){
+        return "access-denied";
+    }
+
     @GetMapping("/register")
     public String registerUserPage(UserEntity userEntity, Model model){
 
