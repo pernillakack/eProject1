@@ -30,10 +30,10 @@ public class SecurityConfig {
         return http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/", "/register", "/access-denied").permitAll()
+                        .requestMatchers("/", "/register", "/access-denied", "/login", "/logout").permitAll()
                         .requestMatchers("/user", "/todo", "/create-todo", "/delete/**", "/edit/**").hasAnyRole(ADMIN.name(), USER.name())
                         .requestMatchers("/admin").hasRole(ADMIN.name())
-                        .anyRequest().permitAll()
+                        .anyRequest().authenticated()
 
                 )
                 .formLogin(formLogin -> formLogin
